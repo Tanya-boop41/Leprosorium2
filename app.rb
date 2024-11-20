@@ -19,6 +19,12 @@ configure do
 		("id" INTEGER PRIMARY KEY AUTOINCREMENT,
 		 "created_date" DATE,
 		 "content" TEXT)'
+
+	@db.execute 'CREATE TABLE IF NOT EXISTS Comments 
+		("id" INTEGER PRIMARY KEY AUTOINCREMENT,
+		 "created_date" DATE,
+		 "content" TEXT,
+		 "post_id" INTEGER)'
 end
 
 get '/' do
@@ -54,8 +60,15 @@ get '/details/:post_id' do
 	results = @db.execute 'SELECT * FROM Posts WHERE id = ?', [post_id]
 	#выбираем этот один пост в переменную @row
 	@row = results[0]
-	#возвращаем представлени
+	#возвращаем представление
 	erb :details
 end
 
+post '/details/:post_id' do
+	#получаем переменную из url'а
+	post_id = params[:post_id]
+	#получаем переменную из post-запроса
+	content = params[:content]
+
+end
 
