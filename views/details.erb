@@ -6,4 +6,14 @@
 		<br/>
 		Добавлен <%= @row['created_date'] %>
 	</p>
-	
+<br/>
+<h4>Комментарии:</h4>
+	<form action="/details/<%= @row['id']%>", method="POST" class="form">
+	<div class="form-floating">
+  		<textarea name="content" class="form-control" rows="3" placeholder="Leave a comments here"></textarea>
+  	</div>
+  	<br/>
+	<div class="form-group">
+       <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+  	</div>
+</form>
