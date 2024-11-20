@@ -69,6 +69,9 @@ post '/details/:post_id' do
 	post_id = params[:post_id]
 	#получаем переменную из post-запроса
 	content = params[:content]
-
+	@db.execute 'INSERT INTO Comments (content, created_date, post_id) 
+	VALUES (?, datetime(), ?)', [content, post_id]
+	#возврат на страницу поста
+	redirect to('/details/' + post_id)
 end
 
