@@ -40,6 +40,7 @@ post '/new' do
 	end
 
 	@db.execute 'INSERT INTO Posts (content, created_date) VALUES (?, datetime())', [@content]
-
-	erb "<h3>Пост опубликован</h3>" 
+	#возврат на главную страницу
+	redirect to '/'
+	
 end
