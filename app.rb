@@ -60,6 +60,8 @@ get '/details/:post_id' do
 	results = @db.execute 'SELECT * FROM Posts WHERE id = ?', [post_id]
 	#выбираем этот один пост в переменную @row
 	@row = results[0]
+	#выбираем комментарии для нашего поста
+	@comments = @db.execute 'SELECT * FROM Comments WHERE post_id = ? ORDER BY id', [post_id]
 	#возвращаем представление
 	erb :details
 end
