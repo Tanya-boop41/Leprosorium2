@@ -18,7 +18,8 @@ configure do
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts 
 		("id" INTEGER PRIMARY KEY AUTOINCREMENT,
 		 "created_date" DATE,
-		 "content" TEXT)'
+		 "content" TEXT,
+		 "author" TEXT)'
 
 	@db.execute 'CREATE TABLE IF NOT EXISTS Comments 
 		("id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,13 +40,19 @@ end
 
 post '/new' do
 	@content = params[:content]
+	#@author = params[:author]
 
 	if @content.length < 1
 		@error = 'Type text'
 		return erb :new
 	end
 
-	@db.execute 'INSERT INTO Posts (content, created_date) VALUES (?, datetime())', [@content]
+	#if @author.length < 1
+	#	@error = 'Type author'
+	#	return erb :new
+	#end
+
+	@db.execute 'INSERT INTO Posts (content, created_date, author) VALUES (?, datetime(), ?)', [@content, @author]
 	#возврат на главную страницу
 	redirect to '/'
 	
@@ -71,9 +78,15 @@ post '/details/:post_id' do
 	post_id = params[:post_id]
 	#получаем переменную из post-запроса
 	content = params[:content]
-	@db.execute 'INSERT INTO Comments (content, created_date, post_id) 
-	VALUES (?, datetime(), ?)', [content, post_id]
-	#возврат на страницу поста
-	redirect to('/details/' + post_id)
+		if content.length < 1
+		
+		@error = 'Type comment'
+		erb 'Добавьте комментарий'
+		else
+		@db.execute 'INSERT INTO Comments (content, created_date, post_id) 
+		VALUES (?, datetime(), ?)', [content, post_id]
+		#возврат на страницу поста
+		redirect to('/details/' + post_id)
+	end
 end
 

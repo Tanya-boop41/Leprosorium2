@@ -2,7 +2,11 @@
 
 <form action="/new", method="POST" class="form">
 	<div class="form-floating">
-  		<textarea name="content" class="form-control" rows="6" placeholder="Leave a post here"></textarea>
+  		<textarea name="content" class="form-control" rows="6" placeholder="Leave a post here" value="<%= @content %>"></textarea>
+  	</div>
+  	<br/>
+  	<div class="form-floating">
+  		<textarea name="author" class="form-control" rows="1" placeholder="Type your name" value="<%= @author %>"></textarea>
   	</div>
   	<br/>
 	<div class="form-group">
